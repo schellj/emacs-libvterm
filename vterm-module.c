@@ -200,10 +200,11 @@ static LineInfo *get_lineinfo(Term *term, int row) {
   }
 }
 static bool is_eol(Term *term, int end_col, int row, int col) {
-  /* This cell is EOL if this and every cell to the right is black */
+  /* This cell is EOL if we don't have any more cells to the right */
   if (row >= 0) {
-    VTermPos pos = {.row = row, .col = col};
-    return vterm_screen_is_eol(term->vts, pos);
+    VTermPos pos = {.row = row, .col = col + 1};
+    VTermScreenCell cell;
+    return vterm_screen_get_cell(term->vts, pos, &cell) ? 0 : 1;
   }
 
   ScrollbackLine *sbrow = term->sb_buffer[-row - 1];
