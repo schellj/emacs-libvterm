@@ -1259,5 +1259,18 @@ can find them and remove them."
     (vterm--remove-fake-newlines)
     (buffer-string)))
 
+(defun vterm--insert-display-spaces (num)
+  "Insert NUM display spaces into the buffer.
+
+This function allows the cursor to be displayed in the expected position in such
+programs (e.g., Vim, MySQL client) that emit null characters for empty space,
+which are considered after end-of-line by the libvterm logic."
+  (when vterm--term
+    (let ((inhibit-redisplay t)
+          (inhibit-read-only t))
+      (dotimes (i num)
+        (insert " "))
+      (setq vterm--redraw-immididately t))))
+
 (provide 'vterm)
 ;;; vterm.el ends here

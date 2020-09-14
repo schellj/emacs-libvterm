@@ -259,9 +259,8 @@ static void goto_col(Term *term, emacs_env *env, int row, int end_col) {
   }
 
   forward_char(env, env->make_integer(env, end_col - offset));
-  emacs_value space = env->make_string(env, " ", 1);
-  for (int i = 0 ; i < beyond_eol ; i += 1)
-    insert(env, space);
+  if (beyond_eol)
+    vterm_insert_display_spaces(env, env->make_integer(env, beyond_eol));
 }
 
 static void refresh_lines(Term *term, emacs_env *env, int start_row,
@@ -1251,6 +1250,7 @@ int emacs_module_init(struct emacs_runtime *ert) {
   Fvterm_get_color =
       env->make_global_ref(env, env->intern(env, "vterm--get-color"));
   Fvterm_eval = env->make_global_ref(env, env->intern(env, "vterm--eval"));
+  Fvterm_insert_display_spaces = env->make_global_ref(env, env->intern(env, "vterm--insert-display-spaces"));
 
   // Exported functions
   emacs_value fun;
