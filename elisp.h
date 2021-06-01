@@ -58,6 +58,7 @@ extern emacs_value Feq;
 extern emacs_value Fvterm_get_color;
 extern emacs_value Fvterm_eval;
 extern emacs_value Fvterm_selection;
+extern emacs_value Fvterm_insert_display_spaces;
 
 // Utils
 void bind_function(emacs_env *env, const char *name, emacs_value Sfun);
@@ -93,5 +94,6 @@ emacs_value vterm_get_color(emacs_env *env, int index);
 emacs_value vterm_eval(emacs_env *env, emacs_value string);
 emacs_value vterm_selection(emacs_env *env, emacs_value selection_target,
                             emacs_value selection_data);
+void vterm_insert_display_spaces(emacs_env *env, emacs_value n);
 
 #endif /* ELISP_H */
